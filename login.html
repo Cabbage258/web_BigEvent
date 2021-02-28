@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/lib/layui/css/layui.css" />
     <link rel="stylesheet" href="assets/css/login.css" />
     <script src="assets/lib/jquery.js"></script>
+    <script src=""></script>
 </head>
 <body>
 <!--头部logo区域-->
@@ -20,26 +21,50 @@
     <!--登录的div-->
     <div class="login-box">
         <!--登录表单-->
-
+        <form class="layui-form" action="">
+            <!--用户名-->
+            <div class="layui-form-item">
+                <div class="layui-input-item">
+                    <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!--密码-->
+            <div class="layui-form-item">
+                    <input type="password" name="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <!--登录按钮-->
+            <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit>登录</button>
+            </div>
+        </form>
+        <a href="javascript:" id="link_reg">去注册账号</a>
     </div>
+
     <!--注册的div-->
-    <div class="reg-box"></div>
+    <div class="reg-box">
+        <a href="javascript:" id="link_login">去登陆</a>
+    </div>
 </div>
 
 </body>
 </html>
 <script>
     $(function(){
+    //1.设置点击切换登录注册盒子
         //点击"去注册账号"的连接
+        //点击注册时隐藏登录盒子显示注册盒子
         $('#link_reg').on('click',function(){
-            $('login-box').hide()
+            $('.login-box').hide()
             $('.reg-box').show()
         })
         //点击"去登陆"的连接
+        //点击去登陆时隐藏注册盒子显示登录盒子
         $('#link_login').on('click',function(){
             $('.login-box').show()
             $('.reg-box').hide()
         })
+    //2.
+
     })
 
 </script>
