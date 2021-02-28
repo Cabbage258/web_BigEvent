@@ -5,3 +5,10 @@
         https://www.showdoc.cc/escook?page_id=3707158761215217
     新建本地库,连接github origin库,追踪本地
 layui框架
+
+自定义代码模版
+    webstorm:
+        ctrl+shift+A => live templates
+    vsc
+        文件 => 首选项 => 用户片段
+
