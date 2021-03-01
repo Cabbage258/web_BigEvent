@@ -50,15 +50,18 @@ $(function () {
             data,
             //请求成功回调函数
             success: function (res) {
-                if (res.status !== 0) {
+                /*if (res.status !== 0) {
                     //这里使用layui提供的layer提示消息样式.layer.msg('提示消息')
                     //当status不为0时,返回 解析提示文本内容,即返回提示错误原因
                     return layer.msg(res.message)
-                }
+                }*/
                 //请求成功时,返回layer提示文本内容为:"注册成功,请登录!"
                 layer.msg('注册成功,请登录!')
                 //调用"去登陆"点击事件函数,即注册成功后返回登录页面
                 $('#link_login').click()
+            },
+            error:function(err){
+                return layer.msg(err.message)
             }
         })
     })
@@ -84,10 +87,13 @@ $(function () {
                 layer.msg('登录成功!')
                 //将登录成功得到的token字符串,保存到localStorage中(值为一个可被用于访问当前源（ origin ）的本地存储空间的 Storage 对象。)
                 //token用于有权限接口的身份认证
-                localStorage.setItem('token', 'res.token')
+                localStorage.setItem('token', res.token)
                 //跳转到后台主页
                 location.href = '/BigEvent_practice/index.html'
             }
+            /*error:function (err) {
+                console.log(err)
+            },*/
         })
     })
 })
