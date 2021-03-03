@@ -107,7 +107,7 @@ $(function(){
                 }
                 layer.msg('文章发布成功!')
                 //发布文章成功后,跳转到文章列表页面
-                location.href = '/article/art_list.html'
+                location.href = '../article/art_list.html'
             }
         })
     }

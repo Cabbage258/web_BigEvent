@@ -117,11 +117,11 @@ $(function(){
     }
 
     //通过代理为删除按钮监听点击事件
-    $('tbody').on('click','btn-delete',function(){
-        //湖区欧文章id
+    $('tbody').on('click','.btn-delete',function(){
+        //获取文章id
         let id = $(this).attr('data-id')
         //询问用户是否要删除数据
-        lay.confirm('确认删除?',{icon:3,title:'提示'},
+        layer.confirm('确认删除?',{icon:3,title:'提示'},
             function(index){
                 //发起ajax请求
                 $.ajax({
@@ -147,5 +147,10 @@ $(function(){
                 //关闭index索引的弹出层
                 layer.close(index)
             })
+    })
+    //监听编辑按钮的点击事件
+    $('body').on('click','.btn-edit',function(){
+        console.log('123')
+        location.href = '../article/art_edit.html?id=' + $(this).attr('data-id')
     })
 })
