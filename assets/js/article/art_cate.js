@@ -13,7 +13,7 @@ $(function () {
             url: '/my/article/cates',
             success: function (res) {
                 let htmlStr = template('tpl-table', res)
-                $('.layui-table tbody').html(htmlStr)
+                $('tbody').html(htmlStr)
             }
         })
     }
@@ -55,41 +55,51 @@ $(function () {
             }
         })
     })
-
+//-------------------------------------------------------------------------------
     //通过代理的形式,为btn-edit按钮绑定点击事件
     //在window下为预先保存弹出索引声明一个变量
     let indexEdit = null
     $('tbody').on('click', '.btn-edit', function () {
         //弹出一个修改文章分类信息的层
         //把这个层赋值给弹出索引indexEdit
-        indexEdit = layer.open({
-            type: 1,
-            area: ['500px', '250px'],
-            title: '修改文章分类',
-            content: $('#dialog-edit').html()
-        })
-
         //
         let id = $(this).attr('data-id')
+
+
         //发起ajax请求来获取对应分类的数据
         $.ajax({
             //type:'get',
             url: '/my/article/cates/' + id,
             success: function (res) {
-                //请求到的数据赋值给表单内容
-                form.val('form-edit', res.data)
+                if(res.status !== 0){
+                    return layer.msg('更新分类信息失败!')
+                }
+                //显示弹出层
+                indexEdit = layer.open({
+                    type: 1,
+                    area: ['500px', '250px'],
+                    title: '修改文章分类',
+                    content: $('#dialog-edit').html(),
+                    success:function(){
+                        //弹出层显示出来以后,为弹出层中的表单赋值
+                        form.val('form-edit', res.data)
+                    }
+                })
             }
         })
+
     })
     //通过代理的形式,为修改分类的表单绑定submit事件
     $('body').on('submit', '#form-edit', function (e) {
         //清除表单提交默认行为
         e.preventDefault()
+        console.log(123)
+        let data = $(this).serialize()
         //发起ajax请求
         $.ajax({
             type: 'post',
-            URL: '/my/article/updatecate',
-            data: $(this).serialize(),
+            url: '/my/article/updatecate',
+            data: data,
             success: function (res) {
                 if (res.status !== 0) {
                     return layer.msg('更新分类数据失败!')
@@ -99,9 +109,13 @@ $(function () {
                 layer.close(indexEdit)
                 //调用获取数据请求函数
                 initArtCateList()
+                console.log(456)
             }
         })
     })
+    //--------------------------------------------------------------
+
+    //------------------------------------------------------------------
     //通过代理的形式,为删除按钮绑定点击事件
     $('tbody').on('click', '.btn-delete', function () {
         let id = $(this).attr('data-id')
@@ -116,6 +130,7 @@ $(function () {
                             return layer.msg('删除分类失败!')
                         }
                         layer.msg('删除分类成功!')
+                        //关闭index索引号的弹出层
                         layer.close(index)
                         //调用请求用户数据函数
                         initArtCateList()
